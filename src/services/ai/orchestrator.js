@@ -34,8 +34,9 @@ async function runRole({ assessmentId, role, intakeData }) {
   });
 
   try {
-    const result = await withRetry(() =>
-      generate({ role, prompt, intakeData }),
+    const result = await withRetry(
+      () => generate({ role, prompt, intakeData }),
+      { timeoutMs: 45_000, retries: 2 },
     );
 
     const status = result.status === 'completed' ? 'completed' : 'failed';
