@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AssessmentStatus {
+  draft
+  processing
+  completed
+  failed
+}
+
+model User {
+  id          String       @id @default(uuid()) @db.Uuid
+  email       String       @unique
+  name        String       @default("")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  assessments Assessment[]
+
+  @@map("users")
+}
+
+model Assessment {
+  id          Int              @id @default(autoincrement())
+  userId      String?          @map("user_id") @db.Uuid
+  status      AssessmentStatus @default(draft)
+  intakeData  Json             @default("{}") @map("intake_data")
+  finalReport Json?            @map("final_report")
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+  user        User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
+  runs        AssessmentRun[]
+
+  @@index([userId])
+  @@map("assessments")
+}
+
+model AssessmentRun {
+  id            Int        @id @default(autoincrement())
+  assessmentId  Int        @map("assessment_id")
+  provider      String
+  model         String
+  role          String
+  promptVersion String     @map("prompt_version")
+  status        String     @default("pending")
+  inputData     Json       @default("{}") @map("input_data")
+  outputData    Json?      @map("output_data")
+  errorMessage  String?    @map("error_message")
+  latencyMs     Int?       @map("latency_ms")
+  createdAt     DateTime   @default(now()) @map("created_at")
+  assessment    Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+  @@map("assessment_runs")
+}
