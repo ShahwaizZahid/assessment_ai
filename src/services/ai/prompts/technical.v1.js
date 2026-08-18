@@ -21,7 +21,8 @@ export function buildTechnicalPrompt(intakeData) {
       'Recommend a tech stack, investment/timeline, user flow steps, and information architecture (screen map) for this MVP. Prefer a small, boring stack.',
     shape: SHAPE,
     intakeData,
+    role: 'technical',
   });
 
-  return { version: 'v1', role: 'technical', system, user };
+  return { version: 'v2', role: 'technical', system, user };
 }

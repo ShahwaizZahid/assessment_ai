@@ -11,7 +11,8 @@ export function buildFeatureScopePrompt(intakeData) {
       'Define a tight beta scope (numbered features with rationale) and what NOT to build. Tag deferred items as V2 or V3 only.',
     shape: SHAPE,
     intakeData,
+    role: 'feature_scope',
   });
 
-  return { version: 'v1', role: 'feature_scope', system, user };
+  return { version: 'v2', role: 'feature_scope', system, user };
 }

@@ -12,7 +12,8 @@ export function buildRealityCheckPrompt(intakeData) {
       'Write an MVP reality check, the outcome that matters, and 2–3 user personas. Be honest and specific to this idea. Cut scope that does not prove the core loop.',
     shape: SHAPE,
     intakeData,
+    role: 'reality_check',
   });
 
-  return { version: 'v1', role: 'reality_check', system, user };
+  return { version: 'v2', role: 'reality_check', system, user };
 }

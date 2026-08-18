@@ -1,4 +1,4 @@
-export const PROMPT_VERSION = 'v1';
+export const PROMPT_VERSION = 'v2';
 
 export const ROLES = {
   REALITY_CHECK: 'reality_check',

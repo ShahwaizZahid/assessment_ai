@@ -15,7 +15,8 @@ export function buildRisksPrompt(intakeData) {
       'Flag market, operational, and financial risks with a mitigation each. Add 3–6 validation questions the founder should answer themselves before building.',
     shape: SHAPE,
     intakeData,
+    role: 'risk_analysis',
   });
 
-  return { version: 'v1', role: 'risk_analysis', system, user };
+  return { version: 'v2', role: 'risk_analysis', system, user };
 }
